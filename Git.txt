@@ -1,0 +1,272 @@
+1. Git does not rely on the central server and that is why you can perform many operations when you are offline.
+You require network connection only to publish your changes and take the latest changes from the server.
+
+2. URL represents the location of the Git repository: url = gituser@git.server.com:project.git
+
+3. 
+[tom@CentOS tom_repo]$ git commit -m 'Initial commit' // Tom committed his changes to the local repository.
+[tom@CentOS tom_repo]$ git remote add origin gituser@git.server.com:project.git  // add the repository as a remote, this is a one-time operation.
+					 $ git remote add origin https://github.com/kangralkar/testing_repo.git
+
+[tom@CentOS tom_repo]$ git push origin master	// push the changes to the origin master branch in the remote repository. The Push operation stores data permanently to the Git repository.
+The above command will produce the following result:
+    Counting objects: 4, done.
+    Compressing objects: 100% (3/3), done.
+    Writing objects: 100% (3/3), 517 bytes, done.
+    Total 3 (delta 0), reused 0 (delta 0)
+    To gituser@git.server.com:project.git  19ae206..d1e19d3 master -> master
+
+4. The Clone operation creates an instance of the remote repository.
+[jerry@CentOS ~]$ mkdir jerry_repo  // Jerry creates a new directory in his home directory and performs the clone operation.
+[jerry@CentOS ~]$ cd jerry_repo/
+[jerry@CentOS jerry_repo]$ git clone gituser@git.server.com:project.git
+[jerry@CentOS jerry_repo]$ git clone https://github.com/kangralkar/test_repo.git
+
+The above command will produce the following result:
+    Initialized empty Git repository in /home/jerry/jerry_repo/project/.git/
+    remote: Counting objects: 3, done.
+    Receiving objects: 100% (3/3), 241 bytes, done.
+    remote: Total 3 (delta 0), reused 0 (delta 0)
+
+5. 
+[jerry@CentOS project]$ git add string.c  // Git add operation adds file to the staging area.
+
+[jerry@CentOS project]$ git status -s
+A string.c
+?? string
+
+[jerry@CentOS project]$ git commit -m 'Implemented my_strlen function'
+The above command will produce the following result:
+    [master cbe1249] Implemented my_strlen function
+    1 files changed, 24 insertions(+), 0 deletions(-)
+    create mode 100644 string.c
+
+6.
+[jerry@CentOS project]$ git log  // display info of all the commits with their commit ID, commit author, commit date and SHA-1 hash of commit.
+[jerry@CentOS project]$ git show cbe1249b140dad24b2c35b15cc7e26a6f02d2277  // review one sepcific commit detail with 'SHA-1 commit ID' as a parameter.
+[jerry@CentOS project]$ git diff  // review file history changes. Git diff shows '+' sign before lines, which are newly added and '-' for deleted lines.
+
+7.
+[jerry@CentOS project]$ git pull	// git pull command to synchronize his local repository with the remote one. Fetch Latest Changes.
+[jerry@CentOS project]$ git push origin master	// Now, Jerry’s local repository is fully synchronized with the remote repository. So he can safely push his changes.
+
+8.In Git, the stash operation takes your modified tracked files, stages changes, and saves them on a stack of unfinished changes that you can reapply at any time.
+[jerry@CentOS project]$ git stash
+  Saved working directory and index state WIP on master: e86f062 Added my_strcpy function
+  HEAD is now at e86f062 Added my_strcpy function
+  
+We can view a list of stashed changes by using the git stash list command.
+[jerry@CentOS project]$ git stash list
+  stash@{0}: WIP on master: e86f062 Added my_strcpy function
+
+[jerry@CentOS project]$ git stash pop	// to remove the changes from the stack and place them in the current working directory.
+
+9.
+[tom@CentOS project]$ mkdir src
+[tom@CentOS project]$ git mv string.c src/
+[jerry@CentOS src]$ git mv string.c string_operations.c 	// Git - Rename Operation
+
+[tom@CentOS src]$ git rm string_operations
+rm 'src/string_operations'
+[tom@CentOS src]$ git commit -a -m "Removed executable binary"  // -a (automatically detect modified files)
+
+10.Tag Operation
+[tom@CentOS project]$ git tag -a 'Release_1_0' -m 'Tagged basic string operation code' HEAD	// tag the current HEAD.
+#Provides a tag name with -a option and provides a tag message with –m option. 
+#If you want to tag a particular commit, then use the appropriate COMMIT ID instead of the HEAD pointer.
+
+[tom@CentOS project]$ git push origin tag Release_1_0	// to push the tag into the remote repository.
+	Counting objects: 1, done.
+	Writing objects: 100% (1/1), 183 bytes, done.
+	Total 1 (delta 0), reused 0 (delta 0)
+	To gituser@git.server.com:project.git
+	* [new tag]
+	Release_1_0 -> Release_1_0
+	
+[jerry@CentOS src]$ git tag -l	 // to view all the available tags.
+Release_1_0
+[jerry@CentOS src]$ git show Release_1_0	// uses the Git show command followed by its tag name to view more details about tag.
+
+[tom@CentOS project]$ git tag -d Release_1_0	// to delete tags from the local as well as the remote repository.
+Deleted tag 'Release_1_0' (was 0f81ff4)
+
+# Remove tag from remote repository.
+[tom@CentOS project]$ git push origin :Release_1_0  
+To gituser@git.server.com:project.git
+- [deleted]
+Release_1_0
+
+11. Patch Operation
+Jerry can create a path of his code and send it to Tom. Then, Tom can apply the received patch to his code.
+	[jerry@CentOS project]$ pwd
+	/home/jerry/jerry_repo/project/src
+	
+	[jerry@CentOS src]$ git status -s
+	M string_operations.c
+	?? string_operations
+	
+	[jerry@CentOS src]$ git add string_operations.c
+	
+	[jerry@CentOS src]$ git commit -m "Added my_strcat function"
+	[master b4c7f09] Added my_strcat function
+	1 files changed, 13 insertions(+), 0 deletions(-)
+	
+	// create a patch for the latest commit. If you want to create a patch for a specific commit, then use COMMIT_ID with the format-patch command.
+	[jerry@CentOS src]$ git format-patch -1  // creates .patch files inside the current working directory. What does '-1' mean here ??
+	0001-Added-my_strcat-function.patch
+
+Tom can now use this patch to modify his files.
+	[tom@CentOS src]$ pwd
+	/home/tom/top_repo/project/src
+	
+	[tom@CentOS src]$ git diff
+	
+	[tom@CentOS src]$ git status –s
+	
+	[tom@CentOS src]$ git apply 0001-Added-my_strcat-function.patch // Git apply modifies local files without creating commit, while git am modifies the file and creates commit as well.
+	
+	[tom@CentOS src]$ git status -s
+	M string_operations.c
+	?? 0001-Added-my_strcat-function.patch
+	
+The patch gets applied successfully, now Tom can view the modifications by using the git diff command.
+[tom@CentOS src]$ git diff
+
+11. Managing Branches
+[jerry@CentOS src]$ git branch new_branch  // use git branch <branch name> command to create a new branch with HEAD as its starting point.
+										   // We can use a specific commit or tag as the starting point.
+[jerry@CentOS src]$ git branch	// use git branch command to list all available branches. Git shows an asterisk mark before currently checked out branch. 
+* master
+new_branch
+
+[jerry@CentOS src]$ git checkout new_branch		// switched to branch 'new_branch'.
+
+Jerry is currently on test_branch and he wants to remove that branch. So he switches to other branch and deletes test_branch as shown below.
+[jerry@CentOS src]$ git checkout master
+Switched to branch 'master'
+[jerry@CentOS src]$ git branch -D test_branch
+Deleted branch test_branch (was 5776472).
+
+[jerry@CentOS src]$ git branch -m new_branch wchar_support	// Rename a Branch. Change the branch name by using –m option followed by the old branch name and the new branch name.
+
+[tom@CentOS project]$ git merge origin/wchar_support // merging branch 'wchar_support' with master branch.
+[tom@CentOS src]$ git push origin master	//  Above merge is done on local, not on remote, so you need to push changes to master branch in remote repository. 
+[tom@CentOS src]$ git log -1 
+
+12. Rebase Branches
+The Git rebase command is a branch merge command, but the difference against merge command is that rebase modifies the order of commits in the current local branch.
+For example, if your local branch has commits A->B->C->D and the merge branch has commits A->B->X->Y, then Git rebase will convert the current local branch to something like A->B->X->Y->C->D.
+
+The Git merge command tries to put the commits from other branches on top of the HEAD of the current local branch.
+For example, your local branch has commits A->B->C->D and the merge branch has commits A->B->X->Y, then git merge will convert the current local branch to something like A->B->C->D->X->Y
+
+13.Create GitHub Repository
+Follow the steps from github.com website to create a new repository.
+
+Tom decides to use the GitHub server.
+[tom@CentOS]$ git commit -m 'Initial commit'
+
+After that, Tom adds the GitHub repository URL as a remote origin and pushes his changes to the remote repository.
+[tom@CentOS]$ git remote add origin https://github.com/kangralkar/test_repo.git
+
+Push operation will ask for GitHub user name and password. After successful authentication, the operation will succeed.
+[tom@CentOS]$ git push -u origin master
+The above command will produce the following result:
+	Username for 'https://github.com': kangralkar
+	Password for 'https://kangralkar@github.com': 
+	Counting objects: 3, done.
+	Writing objects: 100% (3/3), 214 bytes, done.
+	Total 3 (delta 0), reused 0 (delta 0)
+	To https://github.com/kangralkar/test_repo.git
+	* [new branch]      master -> master
+	Branch master set up to track remote branch master from origin.
+
+From now, Tom can push any changes to the GitHub repository, and other developers can view these changes.
+[jerry@CentOS]$ git clone https://github.com/kangralkar/test_repo.git  // Jerry clones the GitHub repository 
+
+14. Git - Fix Mistakes
+
+Revert Changes from Local Repository =================
+Let us suppose Jerry accidentally modifies a file from his local repository. But he wants to undo his modification. To handle this situation, we can use the git checkout command. 
+We can use this command to revert the contents of a file.
+[jerry@CentOS src]$ git checkout string_operations.c
+
+Further, we can use the git checkout command to obtain a deleted file from the local repository. Let us suppose Tom deletes a file from the local repository and we want this file back. 
+We can achieve this by using the same command.
+[tom@CentOS src]$ rm string_operations.c
+
+[tom@CentOS src]$ git status -s
+	D string_operations.c
+	
+[tom@CentOS src]$ git checkout string_operations.c	// revert this removed file back.
+
+[tom@CentOS src]$ ls -1
+string_operations.c
+
+
+Remove Changes from Staging Area =================
+# Modify file and view it’s status.
+[tom@CentOS src]$ git status -s
+M string_operations.c
+
+[tom@CentOS src]$ git add string_operations.c	// the file is present in the staging area now.
+
+[tom@CentOS src]$ git checkout HEAD -- string_operations.c	// revert it to reset the working tree and remove the staged changes. 
+
+[tom@CentOS src]$ git status -s
+Note: We can perform all these operations before commit operation.
+
+ 
+Git reset command. Move HEAD Pointer with Git Reset ===========
+--soft mode
+Each branch has a HEAD pointer, which points to the latest commit. 
+If we use Git reset command with --soft option followed by commit ID, then it will reset the HEAD pointer only, without destroying anything on local repository.
+
+.git/refs/heads/master file stores the commit ID of the HEAD pointer. We can verify it by using the git log -1 command.
+[jerry@CentOS project]$ cat .git/refs/heads/master
+577647211ed44fe2ae479427a0668a4f12ed71a1
+
+Now, view the latest commit ID, which will match with the above commit ID.
+[jerry@CentOS project]$ git log -2
+The above command will produce the following result.
+
+commit 577647211ed44fe2ae479427a0668a4f12ed71a1
+Author: Tom Cat <tom@tutorialspoint.com>
+Date: Wed Sep 11 10:21:20 2013 +0530
+Removed executable binary
+
+commit 29af9d45947dc044e33d69b9141d8d2dad37cc62
+Author: Jerry Mouse <jerry@tutorialspoint.com>
+Date: Wed Sep 11 10:16:25 2013 +0530
+Added compiled binary
+
+Now, Let us reset the HEAD pointer.
+[jerry@CentOS project]$ git reset --soft HEAD~
+Now, we just reset the HEAD pointer back by one position. Let us check the contents of .git/refs/heads/master file.
+[jerry@CentOS project]$ cat .git/refs/heads/master
+29af9d45947dc044e33d69b9141d8d2dad37cc62
+Commit ID from file is changed.
+
+
+--hard mode
+If we use Git reset command with --hard option, it will reset the HEAD pointer to the latest commit of the specific commit ID; it will clear the staging area and delete local file changes too.
+
+Let us check the commit ID.
+[jerry@CentOS src]$ git log -1
+The above command will produce the following result.
+commit 577647211ed44fe2ae479427a0668a4f12ed71a1
+Author: Tom Cat <tom@tutorialspoint.com>
+Date: Wed Sep 11 10:21:20 2013 +0530
+Removed executable binary
+
+[jerry@CentOS src]$ git status -s
+M string_operations.c
+[jerry@CentOS src]$ git add string_operations.c
+[jerry@CentOS src]$ git status
+Git status is showing that the file is present in the staging area. Now, reset HEAD with -- hard option.
+
+[jerry@CentOS src]$ git reset --hard 577647211ed44fe2ae479427a0668a4f12ed71a1
+Git reset command succeeded, which will revert the file from the staging area as well as remove any local changes made to the file.
+
+[jerry@CentOS src]$ git status -s
+Git status is showing that the file has been reverted from the staging area, and local changes are removed.

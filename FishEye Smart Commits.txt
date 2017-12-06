@@ -1,0 +1,28 @@
+https://confluence.atlassian.com/fisheye/using-smart-commits-298976812.html
+Smart Commit commands:
+1. Adds a comment to a JIRA  issue
+	Syntax: <ISSUE_KEY> #comment <comment_string> 
+	Example: JRA-34 #comment 'corrected indent issue'
+ 
+2. Create a review in Crucible and Add reviewers
+	Syntax: <commit message> +review <project key> <reviewer_1> <reviewer_2>... <reviewer_n>
+	Example: 'Fix a bug' +review CR-TEST @Samson @Jason
+
+3. Update a Crucible review(Iteratively add new code changes to a review)
+	Syntax: <commit message> +review <review key>
+	Example: 'Implement rework on past work' +review CR-TEST-123
+	
+Other samples:
+JRA-123 #time 2d 5h
+JRA-123 JRA-234 JRA-345 #resolve  --Multiple issue keys must be separated by whitespace or commas.
+JRA-123 JRA-234 JRA-345 #resolve #time 2d 5h #comment Task completed ahead of schedule --Multiple commands on multiple issues.
+
+-------------
+Get Smart Commits working
+Your FishEye administrator must have:
+•Enabled Smart Commits in FishEye. See Enabling Smart Commits.
+•Configured an application link between FishEye/Crucible and JIRA Software. See Linking to another application.
+
+
+ 
+

@@ -1,0 +1,412 @@
+1. Remote/Local interface are used to expose business methods, and an ejb class has to implement it.
+
+2. Following are the steps required to create a stateful ejb.
+ >>Create a remote/local interface exposing the business methods. This interface will be used by the ejb client application.
+	Use @Local annotation if ejb client is in same environment where ejb session bean is to be deployed. 
+	Use @Remote annotation if ejb client is in different environment where ejb session bean is to be deployed. 
+
+ >>Create a stateless/stateful session bean implementing the above interface.
+Use @Stateless/@Stateful annotation to signify it a stateful bean. EJB Container automatically creates the relevant configurations or interfaces required by reading this annotation during deployment.
+
+---Remote Interface---
+import javax.ejb.Remote;
+@Remote
+public interface LibrarySessionBeanRemote {
+   //add business methods declarations
+}
+
+---Stateless EJB---
+import javax.ejb.Stateless;
+@Stateless
+public class LibrarySessionBean implements LibrarySessionBeanRemote {
+   //implement business methods
+}
+
+
+3. Compile and Deploy the Project
+ant -f C:\\EJB\\EjbComponent clean dist
+init:
+undeploy-clean:
+deps-clean:
+Deleting directory C:\EJB\EjbComponent\build
+Deleting directory C:\EJB\EjbComponent\dist
+clean:
+init:
+deps-jar:
+Created dir: C:\EJB\EjbComponent\build\classes
+Copying 3 files to C:\EJB\EjbComponent\build\classes\META-INF
+Compiling 2 source files to C:\EJB\EjbComponent\build\classes
+
+
+NetBeans console output:
+ant -f C:\\EJB\\EjbComponent -DforceRedeploy=true -Ddirectory.deployment.supported=false -Dnb.wait.for.caches=true run
+init:
+deps-jar:
+compile:
+library-inclusion-in-archive:
+Building jar: C:\EJB\EjbComponent\dist\EjbComponent.jar
+dist-directory-deploy:
+pre-run-deploy:
+Checking data source definitions for missing JDBC drivers...
+Distributing C:\EJB\EjbComponent\dist\EjbComponent.jar to [org.jboss.deployment.spi.LocalhostTarget@1e4f84ee]
+Deploying C:\EJB\EjbComponent\dist\EjbComponent.jar
+Applicaton Deployed
+Operation start started
+Operation start completed
+post-run-deploy:
+run-deploy:
+run:
+BUILD SUCCESSFUL (total time: 2 seconds)
+
+JBoss Application server log output:
+16:30:00,963 INFO  [DeployHandler] Begin start, [EjbComponent.jar]
+...
+16:30:01,233 INFO  [Ejb3DependenciesDeployer] Encountered deployment AbstractVFSDeploymentContext@12038795{vfszip:/C:/jboss-5.1.0.GA/server/default/deploy/EjbComponent.jar/}
+...
+16:30:01,281 INFO  [JBossASKernel]    jndi:LibrarySessionBean/remote-com.tutorialspoint.stateless.LibrarySessionBeanRemote
+16:30:01,281 INFO  [JBossASKernel]    Class:com.tutorialspoint.stateless.LibrarySessionBeanRemote
+16:30:01,281 INFO  [JBossASKernel]    jndi:LibrarySessionBean/remote
+16:30:01,281 INFO  [JBossASKernel]  Added bean(jboss.j2ee:jar=EjbComponent.jar,name=LibrarySessionBean,service=EJB3) to KernelDeployment of: EjbComponent.jar
+16:30:01,282 INFO  [JBossASKernel] installing bean: jboss.j2ee:jar=EjbComponent.jar,name=BookMessageHandler,service=EJB3
+16:30:01,282 INFO  [JBossASKernel]   with dependencies:
+16:30:01,282 INFO  [JBossASKernel]   and demands:
+16:30:01,282 INFO  [JBossASKernel]    jboss.ejb:service=EJBTimerService
+...
+16:30:01,283 INFO  [EJB3EndpointDeployer] Deploy AbstractBeanMetaData@5497cb{name=jboss.j2ee:jar=EjbComponent.jar, name=LibrarySessionBean, service=EJB3_endpoint bean=org.jboss.ejb3.endpoint.deployers.impl.EndpointImpl 
+																			 properties=[container] constructor=null autowireCandidate=true}
+...
+16:30:01,394 INFO  [SessionSpecContainer] Starting jboss.j2ee:jar=EjbComponent.jar,name=LibrarySessionBean,service=EJB3
+16:30:01,395 INFO  [EJBContainer] STARTED EJB: com.tutorialspoint.stateless.LibrarySessionBean ejbName: LibrarySessionBean
+16:30:01,401 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:   
+	LibrarySessionBean/remote - EJB3.x Default Remote Business Interface   
+	LibrarySessionBean/remote-com.tutorialspoint.stateless.LibrarySessionBeanRemote - EJB3.x Remote Business Interface
+	
+
+As soon as you deploy the EjbComponent project on JBOSS, JBoss has automatically created a JNDI entry for our session bean - LibraryStatefulSessionBean/remote.
+We'll using this lookup string to get remote business object of type - com.tutorialspoint.stateful.LibraryStatefulSessionBeanRemote
+
+
+4. 'jndi.properties' (These properties are used to initialize the InitialContext object of java naming service)
+java.naming.factory.initial=org.jnp.interfaces.NamingContextFactory
+java.naming.factory.url.pkgs=org.jboss.naming:org.jnp.interfaces
+java.naming.provider.url=localhost
+
+5. InitialContext object will be used to lookup stateless/stateful session beans
+import javax.naming.InitialContext;
+   InitialContext ctx;
+   {
+      props = new Properties();
+      try {
+      props.load(new FileInputStream("jndi.properties"));
+      } catch (IOException ex) {
+      ex.printStackTrace();
+      }
+      try {
+      ctx = new InitialContext(props);            
+      } catch (NamingException ex) {
+      ex.printStackTrace();
+      }
+      brConsoleReader = 
+      new BufferedReader(new InputStreamReader(System.in));
+   }
+   
+   LibrarySessionBeanRemote libraryBean = (LibrarySessionBeanRemote)ctx.lookup("LibrarySessionBean/remote");
+   Book book = new Book();            book.setName(bookName);
+   libraryBean.addBook(book);  
+   List<Book> booksList = libraryBean.getBooks();
+
+   
+6. A stateless session bean is a type of enterprise bean which is normally used to do independent operations. 
+A stateless session bean as per its name does not have any associated client state, but it may preserve its instance state. 
+EJB Container normally creates a pool of few stateless bean's objects and use these objects to process client's request. 
+Because of pool, instance variable values are not guaranteed to be same across lookups/method calls.
+EJB Container may return same stateless ejb object for every lookup, depending upon how many stateless ejb object JBoss is maintaining.
+Stateless ejb bean is keeping value of instance variable till the server is not restarted.
+
+
+7.A stateful session bean is a type of enterprise bean which preserve the conversational state with client.
+A stateful session bean as per its name keeps associated client state in its instance variables. 
+EJB Container creates a separate stateful session bean to process client's each request. As soon as request scope is over, statelful session bean is destroyed.
+For each lookup a different stateful ejb instance is returned. Stateful ejb object is keeping value for single session only. 
+
+8.A message driven bean is a type of enterprise bean which is invoked by EJB container when it receives a message from queue or topic. 
+Message driven bean is a stateless bean and is used to do task asynchronously.
+
+9.
+DataSource (jboss-ds.xml)
+<?xml version="1.0" encoding="UTF-8"?>
+<datasources>
+   <local-tx-datasource>
+      <jndi-name>PostgresDS</jndi-name>
+      <connection-url>jdbc:postgresql://localhost:5432/postgres</connection-url>
+      <driver-class>org.postgresql.driver</driver-class>
+      <user-name>sa</user-name>
+      <password>sa</password>
+      <min-pool-size>5</min-pool-size>
+      <max-pool-size>20</max-pool-size>
+      <idle-timeout-minutes>5</idle-timeout-minutes>
+   </local-tx-datasource>
+</datasources>
+
+Persistence Unit (persistence.xml)
+<persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+   <persistence-unit name="EjbComponentPU" transaction-type="JTA">
+      <jta-data-source>java:/PostgresDS</jta-data-source>
+      <exclude-unlisted-classes>false</exclude-unlisted-classes>
+      <properties/>
+   </persistence-unit>
+   <persistence-unit name="EjbComponentPU2" transaction-type="JTA">
+      <provider>org.hibernate.ejb.HibernatePersistence</provider>
+      <jta-data-source>java:/PostgresDS</jta-data-source>
+      <exclude-unlisted-classes>false</exclude-unlisted-classes>
+      <properties>
+         <property name="hibernate.hbm2ddl.auto" value="update"/>
+      </properties>
+   </persistence-unit>
+</persistence>
+
+
+package com.tutorialspoint.stateless;
+import javax.ejb.Remote;
+
+@Remote
+public interface LibraryPersistentBeanRemote {
+   void addBook(Book bookName);
+   List<Book> getBooks();    
+}
+
+package com.tutorialspoint.stateless;
+import com.tutorialspoint.entity.Book;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Stateless
+public class LibraryPersistentBean implements LibraryPersistentBeanRemote {
+    
+   public LibraryPersistentBean(){}
+
+   @PersistenceContext(unitName="EjbComponentPU")
+   private EntityManager entityManager;         
+
+   public void addBook(Book book) {
+      entityManager.persist(book);
+   }    
+
+   public List<Book> getBooks() {     
+      return entityManager.createQuery("From Book")
+         .getResultList();
+   }
+ }  
+ 
+ InitialContext ctx = new InitialContext(props);  
+ LibraryPersistentBeanRemote libraryBean = (LibraryPersistentBeanRemote)ctx.lookup("LibraryPersistentBean/remote");
+ 
+10.
+-----//Interceptor class-----
+package com.tutorialspoint.interceptor;
+
+import javax.interceptor.AroundInvoke;
+import javax.interceptor.InvocationContext;
+
+public class BusinessInterceptor {
+   @AroundInvoke
+   public Object methodInterceptor(InvocationContext ctx) throws Exception
+   {
+      System.out.println("*** Intercepting call to LibraryBean method: " 
+      + ctx.getMethod().getName());
+      return ctx.proceed();
+   }
+}
+
+-----//Intercepted Stateless EJB//-----
+@Interceptors ({BusinessInterceptor.class}) // Class level interceptor here
+@Stateless
+public class LibraryBean implements LibraryBeanRemote {
+   //implement business method 
+}
+
+JBoss Application server log output:::::
+Verify the following output in JBoss Application server log output.
+....
+09:55:40,741 INFO  [STDOUT] *** Intercepting call to LibraryBean method: addBook
+09:55:43,661 INFO  [STDOUT] *** Intercepting call to LibraryBean method: getBooks
+
+
+11. JNDI stands for Java Naming and Directory Interface. It is a set of API and service interfaces. 
+Java based applications use JNDI for naming and directory services. 
+
+In context of EJB, there are two terms.
+	Binding - This refers to assigning a name to an ejb object which can be used later.
+	Lookup - This refers to looking up and getting an object of ejb. 
+
+In Jboss, session beans are bound in JNDI in following format by default.
+	local - ejb-name/local
+	remote - ejb-name/remote
+
+In case, ejb are bundled with <application-name>.ear file then default format is as following.
+	local - application-name/ejb-name/local
+	remote - application-name/ejb-name/remote
+
+12. EJB 3.0 provides option to expose session ejb as a webservice. 
+@WebService annotation is used to mark a class as a web service end point and @WebMethod is used to expose a method as web method to client.
+
+import javax.ejb.Stateless;
+import javax.jws.WebMethod;
+import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+@Stateless
+@WebService(serviceName="LibraryService")
+public class LibraryPersistentBean implements LibraryPersistentBeanRemote {
+    
+   public LibraryPersistentBean(){
+   }
+
+   @PersistenceContext(unitName="EjbComponentPU")
+   private EntityManager entityManager;         
+
+   public void addBook(Book book) {
+      entityManager.persist(book);
+   }    
+   
+   @WebMethod(operationName="getBooks")
+   public List <Book> getBooks() {
+      return entityManager.createQuery("From Book").getResultList();
+   }
+}
+
+JBoss Application server log output :::
+
+10:51:37,271 INFO  [EJBContainer] STARTED EJB: com.tutorialspoint.stateless.LibraryPersistentBean ejbName: LibraryPersistentBean
+10:51:37,287 INFO  [JndiSessionRegistrarBase] Binding the following Entries in Global JNDI:
+	LibraryPersistentBean/remote - EJB3.x Default Remote Business Interface
+	LibraryPersistentBean/remote-com.tutorialspoint.stateless.LibraryPersistentBeanRemote - EJB3.x Remote Business Interface
+
+10:51:37,443 INFO  [DefaultEndpointRegistry] register: jboss.ws:context=EjbComponent,endpoint=LibraryPersistentBean
+10:51:38,191 INFO  [WSDLFilePublisher] WSDL published to: file:/D:/Jboss-5.0.1/server/default/data/wsdl/EjbComponent.jar/LibraryService3853081455302946642.wsdl
+
+13.
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+   public List<Book> getBooks() {
+      //create an ejbql expression
+      String ejbQL = "From Book b where b.name like ?1";
+      //create query
+      Query query = entityManager.createQuery(ejbQL);
+      //substitute parameter.
+      query.setParameter(1, "%test%");   
+      //execute the query
+      return query.getResultList();
+   }
+
+14.
+package com.tutorialspoint.test;
+   
+import com.tutorialspoint.entity.Book;
+import com.tutorialspoint.stateless.LibraryPersistentBeanRemote;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.Properties;
+import javax.jms.ObjectMessage;
+import javax.jms.Queue;
+import javax.jms.QueueConnection;
+import javax.jms.QueueConnectionFactory;
+import javax.jms.QueueSender;
+import javax.jms.QueueSession;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+ 
+public class EJBTester {
+ 
+   BufferedReader brConsoleReader = null; 
+   Properties props;
+   InitialContext ctx;
+   {
+      props = new Properties();
+      try {
+         props.load(new FileInputStream("jndi.properties"));
+      } catch (IOException ex) {
+         ex.printStackTrace();
+      }
+      try {
+         ctx = new InitialContext(props);            
+      } catch (NamingException ex) {
+         ex.printStackTrace();
+      }
+      brConsoleReader = 
+      new BufferedReader(new InputStreamReader(System.in));
+   }
+   
+   public static void main(String[] args) { 
+      EJBTester ejbTester = new EJBTester(); 
+      ejbTester.testMessageBeanEjb();
+   }
+   
+   private void showGUI(){
+      System.out.println("**********************");
+      System.out.println("Welcome to Book Store");
+      System.out.println("**********************");
+      System.out.print("Options \n1. Add Book\n2. Exit \nEnter Choice: ");
+   }
+   
+   private void testMessageBeanEjb(){ 
+      try {
+         int choice = 1; 
+         Queue queue = (Queue) ctx.lookup("/queue/BookQueue");
+         QueueConnectionFactory factory =
+         (QueueConnectionFactory) ctx.lookup("ConnectionFactory");
+         QueueConnection connection =  factory.createQueueConnection();
+         QueueSession session = connection.createQueueSession( 
+         false, QueueSession.AUTO_ACKNOWLEDGE);
+         QueueSender sender = session.createSender(queue);
+ 
+         while (choice != 2) {
+            String bookName;
+            showGUI();
+            String strChoice = brConsoleReader.readLine();
+            choice = Integer.parseInt(strChoice);
+            if (choice == 1) {
+               System.out.print("Enter book name: ");
+               bookName = brConsoleReader.readLine();
+               Book book = new Book();
+               book.setName(bookName);
+               ObjectMessage objectMessage = 
+               session.createObjectMessage(book);
+               sender.send(objectMessage); 
+            } else if (choice == 2) {
+               break;
+            }
+         }
+ 
+         LibraryPersistentBeanRemote libraryBean = (LibraryPersistentBeanRemote)ctx.lookup("LibraryPersistentBean/remote");
+         List<Book> booksList = libraryBean.getBooks(); 
+		 
+         System.out.println("Book(s) entered so far: " 
+         + booksList.size());
+         int i = 0;
+         for (Book book:booksList) {
+            System.out.println((i+1)+". " + book.getName());
+            i++;
+         }           
+      } catch (Exception e) {
+         System.out.println(e.getMessage());
+         e.printStackTrace();
+      }finally {
+         try {
+            if(brConsoleReader !=null){
+               brConsoleReader.close();
+            }
+         } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+         }
+      }
+   }   
+}
+

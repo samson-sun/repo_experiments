@@ -1,0 +1,300 @@
+1.ANT stands for Another Neat Tool. It's from Apache.
+  It is a Java-based Operating System build and deployment tool that can be executed from the command line.
+  
+2.Features of Apache Ant:
+  Ant is the most complete Java build and deployment tool available.
+  Ant is platform neutral and can handle platform specific properties such as file separators.
+  Ant can be used to perform platform specific tasks such as modifying the modified time of a file using 'touch' command.
+  Ant scripts are written using plain XML. If you are already familiar with XML, you can learn Ant pretty quickly.
+  Ant is good at automating complicated repetitive tasks.
+  Ant comes with a big list of predefined tasks.
+  Ant provides an interface to develop custom tasks.
+  Ant can be easily invoked from the command line and it can integrate with free and commercial IDEs.
+
+3. Typically, Ant's build file, called build.xml should reside in the base directory of the project. However there is no restriction on the file name or its location.
+  All build files require the project element and at least one target element.
+
+<?xml version="1.0"?>
+<project name="Hello World Project" default="info">   --// default attribute is Mandatory.
+   <target name="info">   --// name attribute is Required.
+      <echo>Hello World - Welcome to Apache Ant!</echo>
+   </target>   
+</project>
+
+<target name="deploy" depends="package">
+  ....
+</target>
+<target name="package" depends="clean,compile"> --// 
+  ....
+</target>
+
+To run the ant build file, open up command prompt and navigate to the folder where the build.xml resides, and type ant.
+
+4.By default, Ant provides the following pre-defined properties that can be used in the build file, such as: basedir, ant.file, ant.home, ant.project.name, ant.project.default-target, ant.project.invoked-targets.
+  Ant also makes the system properties (Example: file.separator) available to the build file.
+  In addition to the above, the user can define additional properties using the property element. The following example shows how to define a property called sitename:
+
+   <property name="sitename" value="www.tutorialspoint.com"/>
+   ...
+   <echo>Apache Ant version is ${ant.version} - You are at ${sitename} </echo>
+   
+The following example shows a build.xml file and its associated build.properties file:
+
+<?xml version="1.0"?>
+<project name="Hello World Project" default="info">
+   <property file="build.properties"/> 
+   <target name="info">
+      <echo>Apache Ant version is ${ant.version} - You are at ${sitename} </echo>
+   </target>   
+</project>
+
+# The Site Name
+sitename=www.tutorialspoint.com
+buildversion=3.3.2
+
+5. The following data types are provided by Apache Ant:
+Fileset
+<fileset dir="${src}" casesensitive="yes">
+   <include name="**/*.java"/>
+   <exclude name="**/*Stub*"/>
+</fileset>
+
+File list
+<filelist id="config.files" dir="${webapp.src.folder}">
+   <file name="applicationConfig.xml"/>
+   <file name="faces-config.xml"/>  	//-- filelist data type can be applied for existing or non-existing files.
+   <file name="web.xml"/>
+   <file name="portlet.xml"/>
+</filelist>
+
+Filter set
+<copy todir="${output.dir}">
+   <fileset dir="${releasenotes.dir}" includes="**/*.txt"/>
+   <filterset>
+      <filter token="VERSION" value="${current.version}"/>  //-- replace certain text in all files that matches the pattern with a replacement value.
+   </filterset>
+</copy>
+
+Path
+<path id="build.classpath.jar">  //-- The path data type is commonly used to represent a class-path.
+   <pathelement path="${env.J2EE_HOME}/${j2ee.jar}"/>
+   <fileset dir="lib">
+      <include name="**/*.jar"/>
+   </fileset>
+</path>
+
+
+6. Ant - Building Project
+<?xml version="1.0"?>
+<project name="fax" basedir="." default="build">
+   <property name="src.dir" value="src"/>
+   <property name="web.dir" value="war"/>
+   <property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+   <property name="name" value="fax"/>
+
+   <path id="master-classpath">  //-- The master-classpath holds the classpath information. In this case, it includes the classes in the build folder and the jar files in the lib folder.
+      <fileset dir="${web.dir}/WEB-INF/lib">
+         <include name="*.jar"/>
+      </fileset>
+      <pathelement path="${build.dir}"/>
+   </path>
+
+   <target name="build" description="Compile source tree java files">
+      <mkdir dir="${build.dir}"/>
+      <javac destdir="${build.dir}" source="1.5" target="1.5">
+         <src path="${src.dir}"/>
+         <classpath refid="master-classpath"/>
+      </javac>
+   </target>
+ 
+   <target name="clean" description="Clean output directories">
+      <delete>
+         <fileset dir="${build.dir}">
+            <include name="**/*.class"/>
+         </fileset>
+      </delete>
+   </target>
+</project>
+
+6. Ant - Creating JAR file
+we create a jar file called util.jar using the classes from the faxapp.util.* package :
+<target name="build-jar">
+   <jar destfile="${web.dir}/lib/util.jar"     //-- this is where the util.jar will be placed
+       basedir="${build.dir}/classes"  //-- where the class files for the util.jar can be found.
+      includes="faxapp/util/**"      excludes="**/Test.class">
+      <manifest>
+         <attribute name="Main-Class" value="com.tutorialspoint.util.FaxUtil"/>  //-- make the util.jar an executable jar file 
+      </manifest>
+   </jar>
+</target>
+Running Ant on this file creates the util.jar file for us:
+C:\>ant build-jar
+Buildfile: C:\build.xml
+
+7. Ant - Creating WAR file
+The WAR task is useful to specify a particular layout of the WAR file.
+Since the WAR task is an extension of the JAR task, all attributes of the JAR task apply to the WAR task.
+<target name="build-war">
+   <war destfile="fax.war" webxml="${web.dir}/web.xml">  //-- Path to the web.xml file
+      <fileset dir="${web.dir}/WebContent">
+         <include name="**/*.*"/>
+      </fileset>      
+      <lib dir="thirdpartyjars">  	//-- specify what files will go into the WEB-INF\lib folder
+         <exclude name="portlet.jar"/>	  
+      </lib>      
+      <classes dir="${build.dir}/web"/> //-- specify what files will go into the WEB-INF\classes folder
+   </war>   
+</target>
+
+The contents of the war file will be:
+fax.war:
+   +---jsp             This folder contains the jsp files
+   +---css             This folder contains the stylesheet files
+   +---js              This folder contains the javascript files
+   +---images          This folder contains the image files
+   +---META-INF        This folder contains the Manifest.Mf
+   +---WEB-INF
+      +---classes   This folder contains the compiled classes
+      +---lib       Third party libraries and the utility jar files
+      WEB.xml       Configuration file that defines the WAR package
+	  
+
+8. Ant - Executing Java code
+<?xml version="1.0"?>
+<project name="sample" basedir="." default="notify">
+   <target name="notify">
+      <java fork="true" failonerror="yes" classname="com.tutorialspoint.util.NotifyAdministrator">
+         <arg line="admin@test.com"/>   //-- String email = args[0];
+      </java>
+   </target>
+</project>
+
+
+9. Ant - JUnit Integration
+<target name="unittest">
+   <junit haltonfailure="true" printsummary="true">   //-- a simple JUnit test execution
+      <test name="com.tutorialspoint.UtilsTest"/>
+   </junit>
+</target>
+
+
+10. Ant - Packaging Applications
+  create a full and complete build.xml file:
+build.properties
+deploy.path = c:\tomcat6\webapps
+
+build.xml
+<?xml version = "1.0"?>
+<project name = "fax" basedir = "." default = "usage">
+   <property file = "build.properties"/>
+   <property name = "src.dir" value = "src"/>
+   <property name = "web.dir" value = "war"/>
+   <property name = "javadoc.dir" value = "doc"/>
+   <property name = "build.dir" value = "${web.dir}/WEB-INF/classes"/>
+   <property name = "name" value = "fax"/>
+
+   <path id = "master-classpath">
+      <fileset dir = "${web.dir}/WEB-INF/lib">
+         <include name = "*.jar"/>
+      </fileset>
+      <pathelement path = "${build.dir}"/>
+   </path>
+    
+   <target name = "javadoc">
+      <javadoc packagenames = "faxapp.*" sourcepath = "${src.dir}" 
+         destdir = "doc" version = "true" windowtitle = "Fax Application">         
+         <doctitle><![CDATA[<h1> =  Fax Application  = </h1>]]></doctitle>
+         <bottom><![CDATA[Copyright © 2011. All Rights Reserved.]]></bottom>
+         <group title = "util packages" packages = "faxapp.util.*"/>
+         <group title = "web packages" packages = "faxapp.web.*"/> 
+         <group title = "data packages" packages = "faxapp.entity.*:faxapp.dao.*"/>
+      </javadoc>
+   </target>
+
+   <target name = "usage">
+      <echo message = ""/>
+      <echo message = "${name} build file"/>
+      <echo message = "-----------------------------------"/>
+      <echo message = ""/>
+      <echo message = "Available targets are:"/>
+      <echo message = ""/>
+      <echo message = "deploy    --> Deploy application as directory"/>
+      <echo message = "deploywar --> Deploy application as a WAR file"/>
+      <echo message = ""/>
+   </target>
+
+   <target name = "build" description = "Compile main source tree java files">
+      <mkdir dir = "${build.dir}"/>
+      
+      <javac destdir = "${build.dir}" source = "1.5" target = "1.5" debug = "true"
+         deprecation = "false" optimize = "false" failonerror = "true">         
+         <src path = "${src.dir}"/>
+         <classpath refid = "master-classpath"/>         
+      </javac>
+   </target>
+
+   <target name = "deploy" depends = "build" description = "Deploy application">
+      <copy todir = "${deploy.path}/${name}" preservelastmodified = "true">
+         <fileset dir = "${web.dir}">
+            <include name = "**/*.*"/>
+         </fileset>
+      </copy>
+   </target>
+
+   <target name = "deploywar" depends = "build" description = "Deploy application as a WAR file">   
+      <war destfile = "${name}.war" webxml = "${web.dir}/WEB-INF/web.xml">
+         <fileset dir = "${web.dir}">
+            <include name = "**/*.*"/>
+         </fileset>
+      </war>      
+      <copy todir = "${deploy.path}" preservelastmodified = "true">  //-- preserving the last modified date time stamp to support hot deployment when deploying to a server.
+         <fileset dir = ".">
+            <include name = "*.war"/>
+         </fileset>
+      </copy>      
+   </target>    
+
+   <target name = "clean" description = "Clean output directories">
+      <delete>
+         <fileset dir = "${build.dir}">
+            <include name = "**/*.class"/>
+         </fileset>
+      </delete>
+   </target>
+   
+</project>
+
+11. Ant - Extending Ant
+Ant comes with a predefined set of tasks, however you can create your own tasks to do whatever you want to improve your build and deployment process.
+Custom Ant Tasks should extend the org.apache.tools.ant.Task class and should extend the execute() method. Below is a simple example:
+
+package com.tutorialspoint.ant;
+import org.apache.tools.ant.Task;
+import org.apache.tools.ant.Project;
+import org.apache.tools.ant.BuildException;
+
+public class MyTask extends Task {
+   String message;
+   public void execute() throws BuildException {
+      log("Message: " + message, Project.MSG_INFO);
+   }
+   
+   public void setMessage(String message) {
+      this.message= message;
+   }
+}
+
+To execute the custom task, you need to add the following to your application:
+<target name="custom">
+   <taskdef name="custom" classname="com.tutorialspoint.ant.MyTask" />
+   <custom message="Hello World!"/>
+</target>
+
+Executing the above custom task prints the message 'Hello World!'
+c:\>ant custom
+test:
+[custom] Message : Hello World!
+elapsed: 0.2 sec
+BUILD PASSED
+
+

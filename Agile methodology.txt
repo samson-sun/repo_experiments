@@ -1,0 +1,48 @@
+http://www.agilemanifesto.org/principles.html
+Agile methods have become one of the hottest trends in software development in the latest years – Extreme programming, Scrum, Lean Software Development, DSDM, Adaptive Software Development, 
+Crystal Clear, Feature-Driven Development, Pragmatic Programming.
+
+Ideas:
+Individuals and their interactions are more important than processes and tools.
+Working software is more important than complete and consistent documentation.
+Cooperation with the Customer is more important than contractual obligations.
+<<Reaction to changes is more important than following the plan>>.
+
+Agile Manifesto Principles:
+Our highest priority is to satisfy the customer through early and <<continuous delivery of valuable software>>. 
+Welcome changing requirements, even late in development. Agile processes harness change for the customer's competitive advantage. 
+Deliver working software frequently, from a couple of weeks to a couple of months, with a preference to the shorter timescale. 
+Business people and developers must work together daily throughout the project. 
+Build projects around motivated individuals. Give them the environment and support they need, and trust them to get the job done. 
+The most efficient and effective method of conveying information to and within a development team is <<face-to-face conversation>>. 
+Working software is the primary measure of progress. 
+Agile processes promote <<sustainable development>>. The sponsors, developers, and users should be able to maintain a constant pace indefinitely. 
+Continuous attention to technical excellence and good design enhances agility. 
+Simplicity – the art of maximizing the amount of work not done – is essential. 
+The best architectures, requirements, and designs emerge from self-organizing teams. 
+At regular intervals, the team reflects on how to become more effective, then <<tunes and adjusts its behavior accordingly>>.
+
+
+If you want to get deeper into Agile, share you Agile experience or participate in Agile discussions, please follow these links:
+https://kb.epam.com/display/EAGILCC/EPAM+Agile+Competency+Center
+https://www.yammer.com/epam.com/groups/agiletalks
+
+===================== Scrum Notes =====================
+Scrum is a process framework that has been used to manage complex product development.
+
+The Scrum framework consists of Scrum Teams and their associated roles, events, artifacts, and rules. 
+Each component within the framework serves a specific purpose and is essential to Scrum’s success and usage.
+
+The rules of Scrum bind together the events, roles, and artifacts, governing the relationships and interaction between them.
+
+<<Scrum Teams deliver products iteratively and incrementally>>, maximizing opportunities for feedback.
+
+Product Backlog items show what the Scrum team will work on next. 
+
+The Scrum Team consists of a Product Owner, the Development Team, and a Scrum Master.
+The Product Owner is responsible for maximizing the value of the product and the work of the Development Team.
+He is responsible for managing the Product Backlog.
+The Development Team consists of professionals who do the work of delivering a potentially releasable Increment of “Done” product at the end of each Sprint. 
+Only members of the Development Team create the Increment.
+
+The Scrum Master is responsible for ensuring Scrum is understood and enacted. Scrum Masters do this by ensuring that the Scrum Team adheres to Scrum theory, practices, and rules.
