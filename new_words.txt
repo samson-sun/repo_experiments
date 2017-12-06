@@ -1,0 +1,228 @@
+﻿comma ,
+colon : 
+semicolon (;)
+hash symbol # 
+forward slash (/)
+backslash (\)
+$ sign
+put quotation marks around the file name ==>>  "my example file.txt"
+by using wildcard (*)
+the up arrow key on your keyboard
+Keep in mind that ...
+occasionally 
+Integrity .  One of EPAM's core values is Integrity.
+the Board of Directors
+Microsoft Skype for Business is the standard Unified Communication tool in our company.
+seek assistance from your Manager.
+get acquainted with something. 
+simultaneously
+This section is an overview of ...
+elaborate : 
+medium, moderate 
+sanction, punishment 
+disperse, distribute, scatter  
+spread, sprinkle, scatter, cast, drop, spill
+fall apart, come loose, scatter, break up, dispel, disperse  
+Basically the same rules apply to this command as the ones for get.
+sustainable	
+emerge  
+collateral  pledge 
+pillar	
+it may vary widely across individuals.
+flexible, agile, nimble 
+hindrance, obstruction, obstacle, barrier, bar, block, impediment  
+inventory, stock, reserve
+Financial Conduct Authority, FCA :
+http://www.doyouhike.net/forum/photo/2278440,0,0,1.html <http://www.doyouhike.net/forum/photo/2278440%2c0%2c0%2c1.html> 
+prosperity
+wrangler/ranch: a large farm, especially in the western US and Canada, where cattle or other animals are bred and raised.
+12306.cn, or China Railway Customer Service Center's website, is China's official online railway ticket booking service provider.
+Your only remedy is to appeal to law.
+There is as yet no known remedy for cancer.
+Aerobic exercise gets the heart pumping and helps you to burn up the fat.	
+Aerobic activity exercises and strengthens your heart and lungs.
+your subordinate
+deceive oneself into doing sth. 
+assessment/evaluation/estimation
+risk assessment, self assessment, self-assessment, tax assessment, continuous assessment, notice of assessment, damage assessment, final assessment, assessment year.
+occasion
+vague, ambiguous, careless, perfunctory
+ambiguous, indistinct 
+ambiguous, equivocal
+zodiac
+is or is likely to
+illusion
+casual
+ties everything together 
+situation, condition, circumstance
+trivial,  of little value or importance.
+Prerequisite  	precedence
+intimate  closely acquainted; familiar, close.
+democracy
+mortgage pledge, hypothec, guaranty, pawn
+the charging of real (or personal) property by a debtor to a creditor as security for a debt (especially one incurred by the purchase of the property), 
+	on the condition that it shall be returned on payment of the debt within a certain period.
+If you have personal debt, such as a line of credit used for investment purchases, consider converting this debt into a personal mortgage on real estate.
+http://www.musicforprogramming.net/
+versus
+Or vice versa  
+coupon
+vertically  horizontally
+intermittent ,  occurring at irregular intervals; not 
+continuous or steady.
+maintain cross-browser compatibility against vulnerability.
+be acquainted with someone.
+Talent Acquisition
+weird, odd, strange.
+Aether osprey 
+thorough
+rectify correct amend mend
+discrepancy	 divergence	difference
+severe
+extra  additional 
+moist  damp or humid.
+beforehand, in advance
+piontless  
+accommodate 
+Learn how to blend product roadmaps into sprint planning, stay on top of dependencies, make the most of your team's skill set, play with what-if scenarios, and build a self-serve information center. 
+mutual understanding, mutual agreement, mutual respect, mutual benefit, mutual trust, mutual interest, mutual aid
+underlying cause 根本原因/ underlying principles 基本原则
+mitigates 熬
+decimal point, decimal fraction
+veto, ban, prohibition
+redundancy
+etiquette
+supreme	
+operand 
+pseudo code
+delimited by semi colon
+consensus 共识 common views. general agreement.
+perception, consciousness, feeling, sensitivity, feel, sentience 知觉
+feel, feeling, sense, sensation, perception, sensibility 感觉 
+the Black and Caspian seas in Georgia, Armenia, Azerbaijan, and southeastern Russia.
+neutral 中性
+either non-recurring or a recurring interval 
+ambiguous,
+coherent,
+Critique
+code snippet 代码片段
+traverse 横过 pass through/over,
+Rich Client Programming, User Experience Interface.
+avoid testing internal or private implementation.
+physiological needs 生理学的； 生理的； 
+physical and psychological/mental 心理的； 精神上的
+fierce,  draw fierce resistance from 
+elastic Search 弹性搜索
+miscellaneous adj. 各种各样的； 五花八门的； 混杂的； 多方面的
+household items  生活用品
+absorb/suck in, 吸收  摄取  吸吮
+supplement, complement,  补充
+gist, main point, essential 要旨  要领  
+handout 讲义
+Anticipate any tough questions and rehearse your answers.
+no objection 没有异议
+It has been a fantastic experience and I appreciate having had this wonderful opportunity to work with you all.
+However, I feel that it is time for me to move on to new opportunities in line with my career goals.
+I do wish you and the company success in all its future endeavors.
+abandon 放弃   abort 中止 舍弃
+reconcile, reconciliation statement  对账单
+depict, describe, paint, draw 描绘 
+medium, intermediary, media  媒介
+in short: SAD – Software Architecture Document
+data integrity  数据的完整性
+be subject to  受制于
+financial position 财务状况
+financial instrument  金融工具
+feasibility  可行性
+Most public companies have a holding company and subsidiaries.
+pertain to 属于
+topology  拓扑
+Multiple paths can be concatenated.
+The following example illustrates the command line invocation syntax for the launchClient tool:
+A commonly used multiplication algorithm. 一种常用的乘法算法.   
+A frequently used operation.
+I was very impressed by ...
+What’s more, she always appears so calm throughout the show, which is very unusual for her age.
+benchmarking analysis  基准分析
+tedious task
+1MB : Megabyte; Gigabyte; Terabyte; Petabyte
+dedicated server  专用服务器
+workaround  n. 解决方法
+I highly recommend separating the business logic from the runtime implementation if possible. This means packaging the application in a WAR file that contains only the application's code.
+This approach of separating the application code from the runtime enables fast and productive development processes.
+The days of "heavyweight Java EE" are certainly over. The APIs contained in the Java EE umbrella offer a productive and enjoyable developer experience and seamless integration within the standards. 
+Be on the Board of Directors.
+I believe software developers have a huge impact in the world, and can effectively improve the planet. Taking responsibility for delivering software is the mark of great developers.
+human-centered
+temptation  诱惑	;	tempting  诱人的
+SIT: System Integration Test
+fivefold 五倍
+sophisticated 复杂  complex
+warehouse wareroom storehouse storeroom depository 仓库 
+stay ahead of the competition.
+a command-line interpreter or shell window.
+subroutine 
+deceive 欺骗
+nested loop  嵌套循环
+mundane life/tasks  平凡的生活/任务In addition to the above, ...
+bits and pieces  点点滴滴
+elapsed time/days 经过时间/日子
+grind grain to flour
+cereal: a grain used for food, such as wheat, oats, or corn.
+tortuous 曲折: full of twists and turns. windling
+be reluctant to ... 不情愿
+in a simple and intuitive way.  简单的和直观的。
+at a moderate level of expertise in knowledge of XML parsing using Java from where you can take yourself to next level.
+obligation and liability  义务和责任
+manpower  人力
+transient, impermanent 短暂的; tentative， provisional,temporary, 临时的
+This tutorial will provide a quick introduction to MariaDB, and aid you in achieving a high level of comfort with MariaDB programming and administration.
+The components within Informatica PowerCenter aid in extracting data from its source, transforming it as per business requirements and loading it into a target data warehouse. 
+feasible solution 可行解决方案
+command prompt 命令提示符
+since its inception  自成立以来
+induction training  入职培训
+CSV stands for "comma-separated values.
+commonplace  平凡 , usual or ordinary ; 
+his chances for survival were slim, almost nil.
+with over 50 percent growth compared with the previous year. year-over-year growth.
+HDR : high Dynamic Range
+sustain life  维持生命
+stash away  藏起来
+line feed  换行
+pictorial representation of the work-flow.
+passphrase  = password 
+augment income 增加收入
+distinctive features  独特的功能
+disperse 分散
+Error is often the precursor of what is correct. 错误常常是正确的先导.
+domestic violence  家庭暴力
+to facilitate the sharing of resources.
+disclosure statement  披露声明
+take input, process them, and return output to the target.
+sequential and parallel streams.
+entrepreneurship and innovation
+obstetrics and pediatrics  产科和儿科
+he simultaneously masters multiple skills.
+successor  继任者  inheritor
+reach a compromise  达成妥协
+infer from  从...推断
+latency period  潜伏期
+latency time  延迟时间
+bi-directional 双向  one-directional
+sanity check 完整性检查
+severity level 严重程度
+tailor-made	  量身定做
+exponentially growth  成倍增长 / 指数增长
+elaborate  阐述
+a large ape of a family closely related to humans, including the gorilla, orangutan, and chimpanzees, but excluding the gibbons; an anthropoid ape.
+我们同样信仰这个世界上有这样一群你们
+热衷互联网生活、有品位、乐分享
+酷爱一切精致
+愿为美好喝彩 
+
+我们用善解人意的设计，把简洁、高效、可信赖的体验注入到科技产品的内心；用平等和有情谊的沟通
+
+我们着眼于为用户创造价值，拥抱变化，持续提供有竞争力的产品和服务。
+隔绝外界压力和诱惑，回归初心，不断突破自我。
+不追逐短期利益和表面繁荣，以企业健康长久的发展为第一原则。
